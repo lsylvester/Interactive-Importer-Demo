@@ -1,0 +1,7 @@
+<%= form_for @csv_import, :html => {:multipart => true} do |form| %>
+  <div class='field'>
+    <%= form.label :file %>
+    <%= form.file_field :file %>
+  </div>
+  <%= form.submit %>
+<% end %>

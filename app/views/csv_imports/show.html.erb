@@ -1,0 +1,16 @@
+<h1>Importing <%= @csv_import.file_name %></h1>
+<%= form_for @csv_import do |form| %>
+  <table>
+    <% @csv_import.file_columns.each_with_index do |column, index| %>
+      <th><%= select_tag "csv_import[columns][]", options_for_select([""] + @csv_import.importable_columns) %></th>
+    <% end %>
+    <% @csv_import.file_rows.each do |row| %>
+      <tr>
+        <% row.each do |cell| %>
+          <td><%= cell %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <%= form.submit 'Import' %>
+<% end %>

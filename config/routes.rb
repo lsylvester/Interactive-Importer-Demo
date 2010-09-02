@@ -1,4 +1,9 @@
 CsvImporter::Application.routes.draw do
+  resources :people
+  delete 'people', :to => 'people#delete_all'
+
+  resources :csv_imports
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
