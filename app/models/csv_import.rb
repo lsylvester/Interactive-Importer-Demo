@@ -1,29 +1,34 @@
 require 'fileutils'
 require 'csv'
 class CsvImport < ActiveRecord::Base
-  def file= file
-    return if file.blank?
-    self.file_name = file.original_filename
-    @file = file
+  has_many :csv_rows, :dependent => :destroy, :inverse_of => :csv_import
+  accepts_nested_attributes_for :csv_rows, :allow_destroy => true
+  
+  attr_accessor :file
+  
+  validates :file, :presence => true, :on => :create
+  validate :ensure_file_is_well_formed, :if => :file
+  def ensure_file_is_well_formed
+    CSV.parse(file)
+  rescue CSV::MalformedCSVError
+    errors.add('file', 'file is malformed')
   end
   
-  def save_file
-    FileUtils.mkdir_p("#{Rails.root}/imports/#{id}")
-    FileUtils.cp(@file.path,"#{Rails.root}/imports/#{id}/#{file_name}" )
+  def generate_rows
+    return unless @file
+    CSV.open(@file).each_with_index do |row, index|
+      CsvRow.create(:content => row, :number => index, :csv_import_id => id)
+    end
   end
-  
-  after_save :save_file
-  
-  def parsed_file
-    @parsed_file ||= CSV.parse(File.read("#{Rails.root}/imports/#{id}/#{file_name}"))
-  end
+
+  after_save :generate_rows
   
   def file_columns
-    parsed_file.first
+    csv_rows.max_by{|r| r.content.size}.content
   end
   
   def file_rows
-    parsed_file
+    csv_rows.map(&:content)
   end
   
   def importable_columns
@@ -33,18 +38,18 @@ class CsvImport < ActiveRecord::Base
   attr_accessor :columns
   
   def import!
-    file_rows.each do |row|
-      Person.create! row_to_hash(row)
+    csv_rows.each do |row|
+      row.import
+    end
+    if csv_rows.count.zero?
+      destroy
+      true
+    else
+      false
     end
   end
   
-  def row_to_hash row
-    {}.tap do |hash|
-      importable_columns.each do |column|
-        if columns.include?(column)
-          hash[column] = row[columns.index(column)]
-        end
-      end
-    end
+  def target_class
+    Person
   end
 end

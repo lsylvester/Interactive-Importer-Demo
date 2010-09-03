@@ -2,6 +2,7 @@
   <div class='field'>
     <%= form.label :file %>
     <%= form.file_field :file %>
+    <%= @csv_import.errors[:file].join(', ') %>
   </div>
   <%= form.submit %>
 <% end %>

@@ -1,0 +1,28 @@
+<h1>Importing Errors</h1>
+<p>The following rows could not be imported due to errors</p>
+<%= form_for @csv_import do |form| %>
+  <table>
+    <tr>
+      <th>Row Number</th>
+      <% @csv_import.columns.each do |column| %>
+        <th><%= select_tag "csv_import[columns][]", options_for_select([""] + @csv_import.importable_columns, column) %></th>
+      <% end %>
+      <th>Delete</th>
+    </tr>
+    <% @csv_import.csv_rows.reject(&:destroyed?).each do |row| %>
+      <tr>
+        <td><%= row.number + 1 %><%= hidden_field_tag "csv_import[csv_rows_attributes][#{row.number}][id]", row.id %></td>
+        <% @csv_import.columns.each_with_index do |column, index| %>
+          <td valign='top'>
+            <%= text_field_tag "csv_import[csv_rows_attributes][#{row.number}][content][]", row.content[index], :class => row.record.errors[column].to_a.join(', ').present? ? 'error' : nil %>
+            <% if row.record.errors[column].to_a.join(', ').present? %>
+              <div class='error'><%= row.record.errors[column].to_a.join(', ') %></div>
+            <% end %>
+          </td>
+        <% end %>
+        <td><%= check_box_tag "csv_import[csv_rows_attributes][#{row.number}][_destroy]", 1 %></td>
+      </tr>
+    <% end %>
+  </table>
+  <%= form.submit %>
+<% end %>
