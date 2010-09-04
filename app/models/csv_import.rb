@@ -24,15 +24,11 @@ class CsvImport < ActiveRecord::Base
   after_save :generate_rows
   
   def file_columns
-    csv_rows.max_by{|r| r.content.size}.content
+    csv_rows.max_by{|r| r.to_a.size }.to_a
   end
   
   def file_rows
     csv_rows
-  end
-  
-  def importable_columns
-    %w(first_name last_name email)
   end
   
   attr_accessor :columns
@@ -49,7 +45,11 @@ class CsvImport < ActiveRecord::Base
     end
   end
   
+  def importable_columns
+    @importable_columns ||= target_class.column_names - %w(id created_at updated_at)
+  end
+  
   def target_class
-    Person
+    @target_class ||= self.class.to_s.gsub('Import','').constantize
   end
 end

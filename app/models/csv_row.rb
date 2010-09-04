@@ -9,13 +9,7 @@ class CsvRow < ActiveRecord::Base
   
   attr_reader :record
   
-  def importable_columns
-    csv_import.importable_columns
-  end
-  
-  def columns
-    csv_import.columns
-  end
+  delegate :importable_columns, :columns, :to => :csv_import
   
   delegate :each, :to => :content
   include Enumerable

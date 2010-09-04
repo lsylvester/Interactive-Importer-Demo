@@ -5,7 +5,7 @@
     <tr>
       <th>Row Number</th>
       <% @csv_import.columns.each do |column| %>
-        <th><%= select_tag "csv_import[columns][]", options_for_select([""] + @csv_import.importable_columns, column) %></th>
+        <th><%= select_tag "#{form.object_name}[columns][]", options_for_select([""] + @csv_import.importable_columns.map{|s| [s.titleize]}, column) %></th>
       <% end %>
       <th>Delete</th>
     </tr>
@@ -16,7 +16,7 @@
           <td valign='top'>
             <%= text_field_tag "#{row_fields.object_name}[content][]", row_fields.object.content[index], :class => row_fields.object.errors[column].present? ? 'error' : nil %>
             <% if row_fields.object.errors[column].present? %>
-              <div class='error'><%= row_fields.object.errors[column].to_a.join(', ') %></div>
+              <div class='error'><%= row_fields.object. errors[column].to_a.join(', ') %></div>
             <% end %>
           </td>
         <% end %>

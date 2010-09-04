@@ -15,6 +15,6 @@
     <% end %>
   </table>
   <%= link_to 'Delete all', people_path, :method => :delete %>
-  <%= link_to 'Import', new_csv_import_path(:klass => :person)%>
+  <%= link_to 'Import', new_person_import_path %>
   
 <% end %>
