@@ -28,7 +28,7 @@ class CsvImport < ActiveRecord::Base
   end
   
   def file_rows
-    csv_rows.map(&:content)
+    csv_rows
   end
   
   def importable_columns

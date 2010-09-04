@@ -17,6 +17,13 @@ class CsvRow < ActiveRecord::Base
     csv_import.columns
   end
   
+  delegate :each, :to => :content
+  include Enumerable
+  
+  def errors
+    @record ? @record.errors : super
+  end
+  
   def row_to_hash
     {}.tap do |hash|
       importable_columns.each do |column|
