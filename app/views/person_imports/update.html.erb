@@ -5,7 +5,7 @@
     <tr>
       <th>Row Number</th>
       <% @csv_import.columns.each do |column| %>
-        <th><%= select_tag "#{form.object_name}[columns][]", options_for_select([""] + @csv_import.importable_columns.map{|s| [s.titleize]}, column) %></th>
+        <th><%= select_tag "#{form.object_name}[columns][]", options_for_select([""] + @csv_import.importable_columns.map{|s| [s.titleize, s]}, column) %></th>
       <% end %>
       <th>Delete</th>
     </tr>

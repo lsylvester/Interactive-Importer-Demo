@@ -2,7 +2,7 @@
 <%= form_for @csv_import do |form| %>
   <table>
     <% @csv_import.file_columns.each_with_index do |column, index| %>
-      <th><%= select_tag "#{form.object_name}[columns][]", options_for_select([""] + @csv_import.importable_columns.map{|s| [s.titleize]},column) %></th>
+      <th><%= select_tag "#{form.object_name}[columns][]", options_for_select([""] + @csv_import.importable_columns.map{|s| [s.titleize, s]},column) %></th>
     <% end %>
     <% @csv_import.file_rows.each do |row| %>
       <tr>

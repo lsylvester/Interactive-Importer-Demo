@@ -1,3 +1,8 @@
+PATH
+  remote: /Users/lachlansylvester/apps/dev/interactive-importer
+  specs:
+    interactive-importer (0.0.1)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -69,5 +74,6 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  interactive-importer!
   rails (= 3.0.0)
   sqlite3-ruby

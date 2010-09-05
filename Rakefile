@@ -4,4 +4,4 @@
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
 
-CsvImporter::Application.load_tasks
+InteractiveImporterDemo::Application.load_tasks

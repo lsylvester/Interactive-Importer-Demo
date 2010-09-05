@@ -1,4 +1,4 @@
-CsvImporter::Application.routes.draw do
+InteractiveImporterDemo::Application.routes.draw do
   resources :people
   delete 'people', :to => 'people#delete_all'
 
