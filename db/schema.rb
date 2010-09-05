@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20100904013114) do
+ActiveRecord::Schema.define(:version => 20100905001643) do
 
   create_table "csv_imports", :force => true do |t|
     t.string   "file_name"
@@ -19,6 +19,7 @@ ActiveRecord::Schema.define(:version => 20100904013114) do
     t.datetime "updated_at"
     t.string   "tyoe"
     t.string   "type"
+    t.text     "columns"
   end
 
   create_table "csv_rows", :force => true do |t|
