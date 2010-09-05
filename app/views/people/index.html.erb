@@ -1,5 +1,5 @@
 <h1>People</h1>
-<% if true || @people.any? %>
+<% if @people.any? %>
   <table>
     <tr>
       <th>First Name</th>
@@ -14,7 +14,8 @@
       </tr>  
     <% end %>
   </table>
+  <%= will_paginate @people %>
   <%= link_to 'Delete all', people_path, :method => :delete %>
-  <%= link_to 'Import', new_person_import_path %>
-  
 <% end %>
+<%= link_to 'Import', new_person_import_path %>
+  
