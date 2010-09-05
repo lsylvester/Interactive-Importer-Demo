@@ -1,2 +1,2 @@
-class PersonImport < CsvImport
+class PersonImport < InteractiveImporter::CsvImport
 end
