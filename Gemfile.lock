@@ -1,5 +1,6 @@
-PATH
-  remote: /Users/lachlansylvester/apps/dev/interactive-importer
+GIT
+  remote: git://github.com/lsylvester/Interactive-Importer.git
+  revision: b13c9e2
   specs:
     interactive-importer (0.0.1)
 
