@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/lsylvester/Interactive-Importer.git
-  revision: b13c9e2
+  revision: 86f6d7d
   specs:
     interactive-importer (0.0.1)
 

@@ -9,7 +9,7 @@
       <% end %>
       <th>Delete</th>
     </tr>
-    <% form.fields_for :csv_rows, @csv_import.csv_rows.reject(&:destroyed?) do |row_fields| %>
+    <% form.fields_for :csv_rows, @csv_import.csv_rows.to_a.select{|r| r.state == 'error' } do |row_fields| %>
       <tr>
         <td><%= row_fields.object.number + 1 %><%= row_fields.hidden_field :id %></td>
         <% @csv_import.columns.each_with_index do |column, index| %>

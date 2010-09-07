@@ -19,7 +19,8 @@ class PersonImportsController < ApplicationController
   def update
     @csv_import = PersonImport.find(params[:id])
     @csv_import.update_attributes params[:person_import]
+    @csv_import.import!
     
-    redirect_to Person if @csv_import.import!
+    redirect_to Person if @csv_import.csv_rows.count(:conditions => {:state => 'error'}).zero?
   end
 end
